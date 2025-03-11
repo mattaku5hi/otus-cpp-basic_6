@@ -62,19 +62,38 @@ chmod +x ./tools/container_build_debug.sh
 ```
 
 ## 4. Usage
-The utility takes no options but awaits double values (until _EOF_) to be sent to standard input:
+The utility takes no options and prints results to standard input:
 ```bash
 ./release/containter
 ```
 Example:
 ```bash
 ./release/containter
-0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
 
-min = 0
-max = 20
-mean = 10
-std = 6.0553
-pct90 = 18
-pct95 = 19
+<<< container ContainerCont<int> example >>>
+Print with dereference: 0 1 2 3 4 5 6 7 8 9 
+Print with get(): 0 1 2 3 4 5 6 7 8 9 
+Container 'vector' size: 10
+Print after erasing: 0 1 3 5 7 8 9 
+Print after inserting at the start: 10 0 1 3 5 7 8 9 
+Print after inserting in the middle: 10 0 1 3 20 5 7 8 9 
+Print after inserting at the end: 10 0 1 3 20 5 7 8 9 30 
+
+<<< container ContainerListDoubly<int> example >>>
+Print with dereference: 0 1 2 3 4 5 6 7 8 9 
+Print with get(): 0 1 2 3 4 5 6 7 8 9 
+Container 'doubly-linked list' size: 10
+Print after erasing: 0 1 3 5 7 8 9 
+Print after inserting at the start: 10 0 1 3 5 7 8 9 
+Print after inserting in the middle: 10 0 1 3 20 5 7 8 9 
+Print after inserting at the end: 10 0 1 3 20 5 7 8 9 30 
+
+<<< container ContainerListSingly<int> example >>>
+Print with dereference: 0 1 2 3 4 5 6 7 8 9 
+Print with get(): 0 1 2 3 4 5 6 7 8 9 
+Container 'singly-linked list' size: 10
+Print after erasing: 0 1 3 5 7 8 9 
+Print after inserting at the start: 10 0 1 3 5 7 8 9 
+Print after inserting in the middle: 10 0 1 3 20 5 7 8 9 
+Print after inserting at the end: 10 0 1 3 20 5 7 8 9 30
 ```
