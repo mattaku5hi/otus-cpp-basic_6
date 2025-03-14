@@ -17,7 +17,7 @@ private:
     T* m_pMem;
     void reallocate(std::size_t capacity);
 public:
-    ContainerCont();
+    ContainerCont() = default;
     ContainerCont(const ContainerCont& other); // copy ctor
     ContainerCont(ContainerCont&& other) noexcept; // move ctor
     ~ContainerCont();
@@ -28,9 +28,9 @@ public:
     class Iterator
     {
     private:
-        T* m_pData;
-        size_t m_index;
-        ContainerCont* m_pContainer;
+        T* m_pData{nullptr};
+        size_t m_index{0};
+        ContainerCont* m_pContainer{nullptr};
     public:
         Iterator(T* pData, size_t index, ContainerCont* pCont);
         T& operator*() const;
@@ -87,13 +87,6 @@ public:
 
 
 template <typename T>
-ContainerCont<T>::ContainerCont()
-    : m_size(0), m_capacity(0), m_pMem(nullptr)
-{
-
-}
-
-template <typename T>
 ContainerCont<T>::ContainerCont(const ContainerCont& other)
     : m_size(other.m_size), m_capacity(other.m_capacity)
 {
@@ -116,16 +109,16 @@ ContainerCont<T>::ContainerCont(ContainerCont&& other) noexcept
 template <typename T>
 ContainerCont<T>::~ContainerCont()
 {
-    clear();
+    delete[] m_pMem;
 }
 
 template <typename T>
 ContainerCont<T>& ContainerCont<T>::operator=(const ContainerCont& other)
 {
-    if(this != other)
+    if(this != &other)
     {
         delete[] m_pMem;
-        m_size = other.size;
+        m_size = other.m_size;
         m_capacity = other.m_capacity;
         m_pMem = new T[m_capacity];
         for(std::size_t i = 0; i < m_size; i++)
@@ -139,11 +132,11 @@ ContainerCont<T>& ContainerCont<T>::operator=(const ContainerCont& other)
 template <typename T>
 ContainerCont<T>& ContainerCont<T>::operator=(ContainerCont&& other) noexcept
 {
-    if(this != other)
+    if(this != &other)
     {
         delete[] m_pMem;
         m_pMem = other.m_pMem;
-        m_size = other.size;
+        m_size = other.m_size;
         m_capacity = other.m_capacity;
         other.m_pMem = nullptr;
         other.m_capacity = 0;
@@ -252,6 +245,7 @@ template <typename T>
 typename ContainerCont<T>::IteratorConst& ContainerCont<T>::IteratorConst::operator++()
 {
     ++m_pData;
+    ++m_index;
     return *(this);
 }
 
@@ -383,7 +377,7 @@ void ContainerCont<T>::reserve(std::size_t capacity)
 template <typename T>
 void ContainerCont<T>::push_back(const T& value)
 {
-    if(m_size == m_capacity)
+    if(m_size >= m_capacity)
     {
         reallocate(m_capacity + 1);
     }
@@ -539,7 +533,8 @@ typename ContainerCont<T>::Iterator ContainerCont<T>::erase(Iterator pos)
 template <typename T>
 void ContainerCont<T>::clear()
 {
-    delete[] m_pMem;
+    // Проверить код на работу этой логики
+    m_size = 0;
 }
 
 
