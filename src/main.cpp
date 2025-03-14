@@ -13,8 +13,6 @@ int main(int argc, char** argv)
     ContainerListSingly<int> linkedSingly;
     ContainerListDoubly<int> linkedDoubly;
 
-    std::vector<int> veccc{1, 2, 3};
-
     std::cout << std::endl << "<<< container " << continuous.getName() << " example >>>" << std::endl;
     for(size_t i = 0; i < 10; i++)
     {

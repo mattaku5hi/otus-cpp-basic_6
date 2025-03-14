@@ -12,9 +12,9 @@ template <typename T>
 class ContainerCont
 {
 private:
-    size_t m_size;
-    size_t m_capacity;
-    T* m_pMem;
+    size_t m_size{0};
+    size_t m_capacity{0};
+    T* m_pMem{nullptr};
     void reallocate(std::size_t capacity);
 public:
     ContainerCont() = default;
@@ -28,9 +28,9 @@ public:
     class Iterator
     {
     private:
-        T* m_pData{nullptr};
-        size_t m_index{0};
-        ContainerCont* m_pContainer{nullptr};
+        T* m_pData;
+        size_t m_index;
+        ContainerCont* m_pContainer;
     public:
         Iterator(T* pData, size_t index, ContainerCont* pCont);
         T& operator*() const;
