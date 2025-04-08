@@ -109,7 +109,7 @@ ContainerCont<T>::ContainerCont(ContainerCont&& other) noexcept
 template <typename T>
 ContainerCont<T>::~ContainerCont()
 {
-    delete[] m_pMem;
+    this->clear();
 }
 
 template <typename T>
@@ -533,8 +533,7 @@ typename ContainerCont<T>::Iterator ContainerCont<T>::erase(Iterator pos)
 template <typename T>
 void ContainerCont<T>::clear()
 {
-    // Проверить код на работу этой логики
-    m_size = 0;
+    delete[] m_pMem;
 }
 
 
